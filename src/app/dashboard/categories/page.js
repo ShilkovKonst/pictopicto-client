@@ -8,8 +8,8 @@ const page = async ({ searchParams }) => {
     searchParams.size ?? 5,
     searchParams.isSeance ?? false
   );
-  
-  return <CategoriesList data={data} />;
+  console.log(data);
+  return <CategoriesList data={data ?? null} />;
 };
 
 export default page;

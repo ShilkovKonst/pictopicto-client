@@ -5,40 +5,19 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import CategoryHead from "./_categoryHead";
 import {
-  getAllBySupercategory,
-  getOneById,
+  getOneMediaFile,
 } from "@/_helpers/categoryApiHelper";
 
-const Category = ({ category, subcategories, supercategory, params }) => {
-  // const [category, setCategory] = useState(null);
-  // const [supercategory, setSupercategory] = useState(null);
-  // const [subcategories, setSubcategories] = useState([]);
-
+const Category = ({
+  category,
+  subcategories,
+  supercategory,
+}) => {
   const [pictograms, setPictograms] = useState([]);
-
-  // const fetchCategory = async (id) => {
-  //   const data = await getOneById(id);
-  //   setCategory(data);
-  // };
-  // const fetchSuperCategory = async (id) => {
-  //   const data = await getOneById(id);
-  //   setSupercategory(data);
-  // };
-  // const fetchSubCategories = async (id) => {
-  //   const data = await getAllBySupercategory(id);
-  //   setSubcategories(data);
-  // };
-
-  // useEffect(() => {
-  //   fetchCategory(params.id);
-  //   fetchSubCategories(params.id);
-  // }, []);
-
-  // useEffect(() => {
-  //   category?.supercategory
-  //     ? fetchSuperCategory(category.supercategory)
-  //     : setSupercategory(null);
-  // }, [category]);
+  const [imageSrc, setImageSrc] = useState("");
+  useEffect(() => {
+    getOneMediaFile(category?.media?.id, setImageSrc);
+  }, [category?.media?.id]);
 
   return (
     <>
@@ -46,30 +25,32 @@ const Category = ({ category, subcategories, supercategory, params }) => {
         <CategoryHead category={category} />
         <tbody className="flex flex-col gap-2">
           {category && (
-          <tr className="flex flex-row flex-wrap gap-1 lg:gap-0 justify-start items-start md:items-center text-sm sm:text-base p-2 border-b">
-            <th className="text-start w-[40%] lg:w-[20%]">Image</th>
-            <td className="text-start w-[45%] lg:w-[30%]">
-              <Image
-                src={`/img/categories/${category?.media?.imageName}`}
-                alt={category?.media?.imageName}
-                className="h-14 w-14 md:h-16 md:w-16"
-                width={60}
-                height={60}
-              />
-            </td>
-            {supercategory && (
-              <>
-                <th className="text-start w-[40%] lg:w-[20%]">
-                  Super category:{" "}
-                </th>
-                <td className="text-start w-[45%] lg:w-[30%]">
-                  <Link href={`/dashboard/categories/${supercategory?.id}`}>
-                    {supercategory.title}
-                  </Link>
-                </td>
-              </>
-            )}
-          </tr>
+            <tr className="flex flex-row flex-wrap gap-1 lg:gap-0 justify-start items-start md:items-center text-sm sm:text-base p-2 border-b">
+              <th className="text-start w-[40%] lg:w-[20%]">Image</th>
+              <td className="text-start w-[45%] lg:w-[30%]">
+                {imageSrc.length > 0 && (
+                  <Image
+                    className="h-14 w-14 md:h-16 md:w-16"
+                    src={imageSrc}
+                    alt={category?.media?.imageName}
+                    width={60}
+                    height={60}
+                  />
+                )}
+              </td>
+              {supercategory && (
+                <>
+                  <th className="text-start w-[40%] lg:w-[20%]">
+                    Super category:{" "}
+                  </th>
+                  <td className="text-start w-[45%] lg:w-[30%]">
+                    <Link href={`/dashboard/categories/${supercategory?.id}`}>
+                      {supercategory.title}
+                    </Link>
+                  </td>
+                </>
+              )}
+            </tr>
           )}
         </tbody>
       </table>

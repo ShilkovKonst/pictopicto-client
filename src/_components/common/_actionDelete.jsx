@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useState } from "react";
 import RemoveIcon from "../icons/removeIcon";
 import { Button, Modal } from "flowbite-react";
@@ -7,9 +7,9 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { deleteOneById } from "@/_helpers/categoryApiHelper";
 
 const ActionDelete = ({ entity }) => {
+  const pathname = usePathname();
   const router = useRouter();
   const [toDelete, setToDelete] = useState(false);
-
   const handleClick = async () => {
     try {
       const formData = new FormData();
@@ -19,7 +19,8 @@ const ActionDelete = ({ entity }) => {
       const imageResponse = await fetch("/api/category", requestOptions);
       const result = await imageResponse.json();
       setToDelete(false);
-      router.push(`/dashboard/categories?page=0&size=5`);
+      pathname.split("/").length > 3 &&
+        router.push(`/dashboard/categories?page=0&size=5`);
       router.refresh();
     } catch (error) {
       console.log(error);

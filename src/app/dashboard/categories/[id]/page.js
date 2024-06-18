@@ -2,6 +2,7 @@ import Category from "@/_components/dashboard/categories/category/Category";
 import {
   getAllBySupercategory,
   getOneById,
+  getOneMediaPage,
 } from "@/_helpers/categoryApiHelper";
 import React from "react";
 
@@ -11,7 +12,13 @@ const page = async ({ params }) => {
   const supercategory = category.supercategory
     ? await getOneById(category.supercategory)
     : null;
-  return <Category category={category} subcategories={subcategories} supercategory={supercategory} params={params} />;
+  return (
+    <Category
+      category={category}
+      subcategories={subcategories}
+      supercategory={supercategory}
+    />
+  );
 };
 
 export default page;

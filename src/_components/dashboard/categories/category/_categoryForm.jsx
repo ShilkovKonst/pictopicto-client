@@ -1,18 +1,17 @@
 "use client";
-import { createOne, updateOneById } from "@/_helpers/categoryApiHelper";
+import { createOne, getOneMediaFile, updateOneById } from "@/_helpers/categoryApiHelper";
 import { FileInput, Label, Select, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const CategoryForm = ({ category, categories, pathname }) => {
   const router = useRouter();
 
   const [form, setForm] = useState({
-    imageName: category.media.imageName,
     imageFile: null,
-    title: category ? category.title : "",
+    title: category ? category?.title : "",
     supercategory:
-      category && category?.supercategory ? category.supercategory : null,
+      category && category?.supercategory ? category?.supercategory : -1,
   });
 
   const handleChange = (e) => {
@@ -28,57 +27,22 @@ const CategoryForm = ({ category, categories, pathname }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(form);
-    const body = {
-      imageName: form.imageFile
-        ? form.imageFile.name
-        : category
-        ? category.media.imageName
-        : "",
-      title: form.title,
-      supercategory: form.supercategory,
-    };
+    const formData = new FormData();
+    formData.append("title", form.title);
+    formData.append("supercategory", form.supercategory);
+    form.imageFile && formData.append("imageFile", form.imageFile);
     try {
       // on create category
       if (pathname.includes("create")) {
-        const response = await createOne(body);
-
-        // saving new image to public folder
-        const formData = new FormData();
-        formData.append("imageFile", form.imageFile);
-        const requestOptions = { method: "POST", body: formData };
-        const imageResponse = await fetch("/api/category", requestOptions);
-        const result = await imageResponse.json();
-        console.log("result", result);
+        const response = await createOne(formData);
+        console.log("response from update", response);
         router.push(`/dashboard/categories/${response.id}`);
         router.refresh();
       }
       // on update category
       else {
-        const response = await updateOneById(category.id, body);
+        const response = await updateOneById(category?.id, formData);
         console.log("response from update", response);
-        console.log(form);
-        // saving new image to public folder
-        if (form.imageFile) {
-          // delete old image
-          const imageToDelete = new FormData();
-          imageToDelete.append("fileName", form.imageName);
-          const deleteOptions = { method: "DELETE", body: imageToDelete };
-          const deleteImageResponse = await fetch(
-            "/api/category",
-            deleteOptions
-          );
-          const deleteResult = await deleteImageResponse.json();
-          console.log("deleteResult", deleteResult);
-
-          // assign new image
-          const formData = new FormData();
-          formData.append("imageFile", form.imageFile);
-          const postOptions = { method: "POST", body: formData };
-          const imageResponse = await fetch("/api/category", postOptions);
-          const postResult = await imageResponse.json();
-          console.log("result", postResult);
-        }
         router.push(`/dashboard/categories/${response.id}`);
         router.refresh();
       }
@@ -98,7 +62,7 @@ const CategoryForm = ({ category, categories, pathname }) => {
           value={
             pathname.includes("create")
               ? `Image`
-              : `Image: ${category.media.imageName}`
+              : `Image: ${category?.media?.imageName}`
           }
         />
         <FileInput
@@ -130,7 +94,7 @@ const CategoryForm = ({ category, categories, pathname }) => {
           defaultValue={form.supercategory}
           required
         >
-          <option value={null}>Sans super-catégorie</option>
+          <option value={-1}>Sans super-catégorie</option>
           {categories.map(
             (cat, i) =>
               cat.id != category?.id &&

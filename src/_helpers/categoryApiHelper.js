@@ -6,7 +6,7 @@ const REVALIDATE = 0;
 export const getAll = async (pageNo, listSize, isSeance) => {
   try {
     const res = await fetch(
-      `${BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
+      `http://localhost:8080/api/gateway/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
       { next: { revalidate: REVALIDATE } }
     );
     if (res.ok) {
@@ -21,7 +21,7 @@ export const getAll = async (pageNo, listSize, isSeance) => {
 
 // find all categories as one list
 export async function getAllAsList() {
-  const res = await fetch(`${BASE_URL}/categories?isSeance=true`, {
+  const res = await fetch(`http://localhost:8080/api/gateway/categories?isSeance=true`, {
     next: { revalidate: REVALIDATE },
   }).catch((e) => {
     throw new Error("Failed to fetch data: " + e.message);

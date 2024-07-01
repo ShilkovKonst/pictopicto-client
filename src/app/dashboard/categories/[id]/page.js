@@ -14,9 +14,9 @@ const page = async ({ params }) => {
     : null;
   return (
     <Category
-      category={category}
-      subcategories={subcategories}
-      supercategory={supercategory}
+      category={category ?? null}
+      subcategories={subcategories ?? null}
+      supercategory={supercategory ?? null}
     />
   );
 };

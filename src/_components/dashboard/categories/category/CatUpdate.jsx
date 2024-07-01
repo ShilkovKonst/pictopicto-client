@@ -9,9 +9,15 @@ const CatUpdate = ({ category, categories }) => {
   return (
     <>
       <table className="table w-full">
-        <CategoryHead category={category} pathname={pathname} />
+        {category && <CategoryHead category={category} pathname={pathname} />}
       </table>
-      <CategoryForm category={category} categories={categories} pathname={pathname} />
+      {category && (
+        <CategoryForm
+          category={category}
+          categories={categories}
+          pathname={pathname}
+        />
+      )}
     </>
   );
 };

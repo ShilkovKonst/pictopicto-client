@@ -22,7 +22,7 @@ const Category = ({
   return (
     <>
       <table className="table w-full">
-        <CategoryHead category={category} />
+      {category && <CategoryHead category={category} />}
         <tbody className="flex flex-col gap-2">
           {category && (
             <tr className="flex flex-row flex-wrap gap-1 lg:gap-0 justify-start items-start md:items-center text-sm sm:text-base p-2 border-b">

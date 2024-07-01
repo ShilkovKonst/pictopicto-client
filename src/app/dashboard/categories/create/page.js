@@ -5,7 +5,7 @@ import React from "react";
 
 const page = async () => {  
   const categories = await getAll(0, 0, true);
-  return <CatCreate categories={categories} />;
+  return <CatCreate categories={categories ?? null} />;
 };
 
 export default page;

@@ -22,7 +22,7 @@ const LoginForm = () => {
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-loose text-[#181818] md:mb-4">
           Connexion
         </h2>
-        {/* {% if app.user %} */}
+        {/* {% if app.user %} 
         <div className="z-10 mb-3 text-center">
           Vous êtes vous connecté(e) en tant que
           <a
@@ -35,7 +35,7 @@ const LoginForm = () => {
             </button>
           </form>
         </div>
-        {/* {% endif %} */}
+        {% endif %} */}
 
         <form
         //   action="{{ path('app_login') }}"

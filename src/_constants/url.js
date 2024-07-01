@@ -1,1 +1,1 @@
-export const BASE_URL = "http://localhost:8080/api/gateway"
+export const BASE_URL = "hhttp://15.188.137.249:/api/gateway"

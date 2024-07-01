@@ -6,7 +6,7 @@ const REVALIDATE = 0;
 export const getAll = async (pageNo, listSize, isSeance) => {
   try {
     const res = await fetch(
-      `http://${BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
+      `${BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
       { next: { revalidate: REVALIDATE } }
     );
     if (res.ok) {

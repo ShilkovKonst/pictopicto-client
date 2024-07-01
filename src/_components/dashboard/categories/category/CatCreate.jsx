@@ -9,9 +9,9 @@ const CatCreate = ({ categories }) => {
   return (
     <>
       <table className="table w-full">
-        {category && <CategoryHead category={null} />}
+        <CategoryHead category={null} />
       </table>
-      {category && (
+      {categories && (
         <CategoryForm
           category={null}
           categories={categories}

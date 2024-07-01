@@ -1,6 +1,6 @@
 import React from "react";
-import LoginForm from "@/_components/accueil/LoginForm";
-import ModeInvite from "./ModeInvite";
+import LoginForm from "./loginForm";
+import ModeInvite from "./modeInvite";
 
 const Accueil = () => {
   return (

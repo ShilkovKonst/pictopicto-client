@@ -42,9 +42,9 @@ const LoginForm = () => {
         //   method="post"
           className="flex flex-col w-full h-full"
         >
-          {/* {% if error %} */}
+          {/* {% if error %}
           <div className="alert rounded-lg alert-danger"></div>
-          {/* {% endif %} */}
+          {% endif %} */}
 
           {/* {% if app.user == null %} */}
           <div className=" z-50">

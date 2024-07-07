@@ -1,4 +1,3 @@
-import { BASE_URL } from "@/_constants/url";
 
 const REVALIDATE = 0;
 
@@ -6,7 +5,7 @@ const REVALIDATE = 0;
 export const getAll = async (pageNo, listSize, isSeance) => {
   try {
     const res = await fetch(
-      `${BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
       { next: { revalidate: REVALIDATE } }
     );
     if (res.ok) {
@@ -21,7 +20,7 @@ export const getAll = async (pageNo, listSize, isSeance) => {
 
 // find all categories as one list
 export async function getAllAsList() {
-  const res = await fetch(`${BASE_URL}/categories?isSeance=true`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories?isSeance=true`, {
     next: { revalidate: REVALIDATE },
   }).catch((e) => {
     throw new Error("Failed to fetch data: " + e.message);
@@ -30,7 +29,7 @@ export async function getAllAsList() {
 }
 
 export async function getOneById(id) {
-  const res = await fetch(`${BASE_URL}/categories/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`, {
     next: { revalidate: REVALIDATE },
   }).catch((e) => {
     throw new Error("Failed to fetch data: " + e.message);
@@ -40,7 +39,7 @@ export async function getOneById(id) {
 
 // find all subcategories
 export async function getAllBySupercategory(id) {
-  const res = await fetch(`${BASE_URL}/categories/${id}/subcategories`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}/subcategories`, {
     next: { revalidate: REVALIDATE },
   }).catch((e) => {
     throw new Error("Failed to fetch data: " + e.message);
@@ -50,7 +49,7 @@ export async function getAllBySupercategory(id) {
 
 export async function createOne(body) {
   console.log(body);
-  const res = await fetch(`${BASE_URL}/categories`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`, {
     method: "POST",
     body: body,
   }).catch((e) => {
@@ -65,7 +64,7 @@ export async function createOne(body) {
 
 export async function updateOneById(id, body) {
   console.log(body.get("imageFile"));
-  const res = await fetch(`${BASE_URL}/categories/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`, {
     method: "PUT",
     body: body,
   }).catch((e) => {
@@ -79,7 +78,7 @@ export async function updateOneById(id, body) {
 }
 
 export async function deleteOneById(id) {
-  const res = await fetch(`${BASE_URL}/categories/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`, {
     method: "DELETE",
   }).catch((e) => {
     throw new Error("Failed to delete data: " + e.message);
@@ -90,7 +89,7 @@ export async function deleteOneById(id) {
 // category media management
 export async function createOneMedia(data) {
   console.log(data);
-  const res = await fetch(`${BASE_URL}/categories/media`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/media`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -104,7 +103,7 @@ export async function createOneMedia(data) {
 
 export async function deleteOneMediaById(id) {
   console.log(data);
-  const res = await fetch(`${BASE_URL}/categories/media/${id}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/media/${id}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -118,7 +117,7 @@ export async function deleteOneMediaById(id) {
 
 export const getOneMediaFile = async (id, setImageSrc) => {
   try {
-    const response = await fetch(`${BASE_URL}/categories/${id}/image`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}/image`);
     if (response.ok) {
       const blob = await response.blob();
       const objectURL = URL.createObjectURL(blob);

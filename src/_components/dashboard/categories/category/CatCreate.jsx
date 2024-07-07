@@ -11,13 +11,11 @@ const CatCreate = ({ categories }) => {
       <table className="table w-full">
         <CategoryHead category={null} />
       </table>
-      {categories && (
-        <CategoryForm
-          category={null}
-          categories={categories}
-          pathname={pathname}
-        />
-      )}
+      <CategoryForm
+        category={null}
+        categories={categories}
+        pathname={pathname}
+      />
     </>
   );
 };

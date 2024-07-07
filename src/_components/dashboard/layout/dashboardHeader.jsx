@@ -1,5 +1,6 @@
 import images from "@/_constants/images";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const DashboardHeader = () => {
@@ -18,9 +19,9 @@ const DashboardHeader = () => {
             {/* {{ app.user.firstName }} {{ app.user.lastName }} */}
           </p>
         </div>
-        <a
+        <Link
           className="w-10 h-10 bg-pbg hover:bg-pred transition duration-300 ease-in-out rounded-full overflow-hidden"
-          href="/logout"
+          href="/"
         >
           <svg
             className="w-10 h-10 text-white"
@@ -39,7 +40,7 @@ const DashboardHeader = () => {
               d="M6 18 17.94 6M18 18 6.06 6"
             />
           </svg>
-        </a>
+        </Link>
       </div>
     </div>
   );

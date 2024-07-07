@@ -1,10 +1,8 @@
-import UserProfile from '@/_components/dashboard/user/userProfile'
-import React from 'react'
+import UserProfile from "@/_components/dashboard/user/userProfile";
+import React from "react";
 
 const page = () => {
-  return (
-    <UserProfile />
-  )
-}
+  return <UserProfile />;
+};
 
-export default page
+export default page;

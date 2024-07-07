@@ -95,7 +95,7 @@ const CategoryForm = ({ category, categories, pathname }) => {
           required
         >
           <option value={-1}>Sans super-catégorie</option>
-          {categories.map(
+          {categories && categories.map(
             (cat, i) =>
               cat.id != category?.id &&
               !cat.supercategory && (

@@ -1,15 +1,12 @@
 "use client";
 import images from "@/_constants/images";
+import { signup } from "@/_helpers/authApiHelpers";
 import Image from "next/image";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
-import { useRouter } from "next/navigation";
-import { signin } from "@/_helpers/authApiHelpers";
-
-const LoginForm = () => {
+const SignUpForm = () => {
   const router = useRouter();
-
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -27,25 +24,28 @@ const LoginForm = () => {
     const formData = new FormData();
     formData.append("email", form.email);
     formData.append("password", form.password);
-    console.log(formData);
     try {
-      const response = await signin(formData);
-      console.log("response from signin", response);
+      const response = await signup(formData);
       if (response.status >= 400) {
         setIsError(true);
-        setErrorMessage("Invalid credentials");
+        setErrorMessage("Invalid credentials:"+ 
+          "user already exists");
       } else {
-        router.push(`/dashboard`);
+        router.push(`/`);
         router.refresh();
       }
     } catch (error) {
-      console.error("Bad credentials:", error.message);
+      throw new Error(
+        "Une erreur s'est produite lors de"+ 
+        "l'envoi du message. " 
+        + error.message
+      );
     }
   };
 
   return (
     <div
-      className="flex justify-center z-10 relative items-center h-full w-full md:w-2/5 bg-[#e5e9ec] overflow-hidden shadow-outset-4/10"
+      className="flex justify-center z-10 relative items-center h-full w-full bg-[#e5e9ec] overflow-hidden shadow-outset-4/10"
       id="connexion switch-cnt"
     >
       <div
@@ -59,11 +59,13 @@ const LoginForm = () => {
           className="z-10 "
         />
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-loose text-[#181818] md:mb-4">
-          Connexion
+          Inscription
         </h2>
 
         <form className="flex flex-col w-full h-full">
-          {isError && <div className="text-red-600 mx-auto">{errorMessage}</div>}
+          {isError && (
+            <div className="text-red-600 mx-auto">{errorMessage}</div>
+          )}
           <div className="z-50">
             <input
               type="email"
@@ -82,7 +84,6 @@ const LoginForm = () => {
               name="password"
               id="password"
               className="input-text md:mb-4"
-              autoComplete="current-password"
               onChange={handleChange}
               value={form.password}
               required
@@ -96,35 +97,22 @@ const LoginForm = () => {
           </div>
 
           <div className="flex flex-col items-center justify-between w-full h-full">
-            <Link
-              href="/"
-              className="z-10 cursor-pointer underline text-sm leading-loose font-bold hover:text-pred transition duration-150"
-            >
-              Mot de passe oublié ?
-            </Link>
-            <Link
-              href="/dashboard"
-              className="z-10 btn-b flex justify-center items-center"
-              type="submit"
-            >
-              To dashboard
-            </Link>
             <button
               className="z-10 btn-b flex justify-center items-center"
               type="submit"
               onClick={handleSubmit}
             >
-              Se connecter
+              S&apos;inscrire
             </button>
           </div>
         </form>
         <p className="z-10 absolute bottom-0 md:bottom-3 text-sm mx-auto h-11 leading-loose font-bold">
-          Pas encore de compte ?
+          Déjà s&apos;inscrit ?
           <a
-            href="/signup"
+            href="/"
             className="cursor-pointer underline hover:text-pred transition duration-150 ml-2"
           >
-            S&apos;inscrire
+            Se connecter
           </a>
         </p>
       </div>
@@ -134,4 +122,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

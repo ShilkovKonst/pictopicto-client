@@ -4,10 +4,18 @@ const REVALIDATE = 0;
 
 // find all categories as pages for dashboard
 export const getAll = async (pageNo, listSize, isSeance) => {
+  const csrfToken = await getCsrfToken();
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
-      { next: { revalidate: REVALIDATE } }
+      {
+        next: { revalidate: REVALIDATE },
+        headers: {
+          "X-XSRF-TOKEN": csrfToken, // add CSRF token to headers
+        },
+        credentials: "include",
+      }
     );
     if (res.ok) {
       const body = await res.json();

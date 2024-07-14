@@ -1,6 +1,6 @@
 import { getCsrfToken } from "./authApiHelpers";
 
-const REVALIDATE = 3600;
+const REVALIDATE = parseInt(process.env.REVALIDATE);
 
 // find all categories as pages for dashboard
 export const getAll = async (pageNo, listSize, isSeance) => {
@@ -10,7 +10,7 @@ export const getAll = async (pageNo, listSize, isSeance) => {
     const res = await fetch(
       `${process.env.API_BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
       {
-        next: { revalidate: process.env.REVALIDATE },
+        next: { revalidate: REVALIDATE },
         headers: {
           "X-XSRF-TOKEN": csrfToken, // add CSRF token to headers
         },

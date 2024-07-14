@@ -1,6 +1,6 @@
 import { getCsrfToken } from "./authApiHelpers";
 
-const REVALIDATE = 0;
+const REVALIDATE = 3600;
 
 // find all categories as pages for dashboard
 export const getAll = async (pageNo, listSize, isSeance) => {
@@ -8,9 +8,9 @@ export const getAll = async (pageNo, listSize, isSeance) => {
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
+      `${process.env.API_BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
       {
-        next: { revalidate: REVALIDATE },
+        next: { revalidate: process.env.REVALIDATE },
         headers: {
           "X-XSRF-TOKEN": csrfToken, // add CSRF token to headers
         },
@@ -30,7 +30,7 @@ export const getAll = async (pageNo, listSize, isSeance) => {
 // find all categories as one list
 export async function getAllAsList() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories?isSeance=true`,
+    `${process.env.API_BASE_URL}/categories?isSeance=true`,
     {
       next: { revalidate: REVALIDATE },
     }
@@ -42,7 +42,7 @@ export async function getAllAsList() {
 
 export async function getOneById(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`,
+    `${process.env.API_BASE_URL}/categories/${id}`,
     {
       next: { revalidate: REVALIDATE },
     }
@@ -55,7 +55,7 @@ export async function getOneById(id) {
 // find all subcategories
 export async function getAllBySupercategory(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}/subcategories`,
+    `${process.env.API_BASE_URL}/categories/${id}/subcategories`,
     {
       next: { revalidate: REVALIDATE },
     }
@@ -70,7 +70,7 @@ export async function createOne(body) {
 
   console.log(body);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`,
+    `${process.env.API_BASE_URL}/categories`,
     {
       method: "POST",
       body: body,
@@ -94,7 +94,7 @@ export async function updateOneById(id, body) {
 
   console.log(body.get("imageFile"));
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`,
+    `${process.env.API_BASE_URL}/categories/${id}`,
     {
       method: "PUT",
       body: body,
@@ -117,7 +117,7 @@ export async function deleteOneById(id) {
   const csrfToken = await getCsrfToken();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`,
+    `${process.env.API_BASE_URL}/categories/${id}`,
     {
       method: "DELETE",
       headers: {
@@ -138,7 +138,7 @@ export async function createOneMedia(data) {
 
   console.log(data);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/media`,
+    `${process.env.API_BASE_URL}/categories/media`,
     {
       method: "POST",
       body: JSON.stringify(data),
@@ -159,7 +159,7 @@ export async function deleteOneMediaById(id) {
 
   console.log(data);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/media/${id}`,
+    `${process.env.API_BASE_URL}/categories/media/${id}`,
     {
       method: "DELETE",
       body: JSON.stringify(data),
@@ -178,7 +178,7 @@ export async function deleteOneMediaById(id) {
 export const getOneMediaFile = async (id, setImageSrc) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}/image`
+      `${process.env.API_BASE_URL}/categories/${id}/image`
     );
     if (response.ok) {
       const blob = await response.blob();

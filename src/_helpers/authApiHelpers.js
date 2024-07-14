@@ -2,7 +2,7 @@ export const signup = async (body) => {
   const csrfToken = await getCsrfToken();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/signUp`,
+    `${process.env.API_BASE_URL}/auth/signUp`,
     {
       method: "POST",
       body: body,
@@ -21,7 +21,7 @@ export const signin = async (body) => {
   const csrfToken = await getCsrfToken();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/signIn`,
+    `${process.env.API_BASE_URL}/auth/signIn`,
     {
       method: "POST",
       body: body,
@@ -41,16 +41,17 @@ export const signin = async (body) => {
 
 export const getCsrfToken = async () => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/csrf/token`,
+    `${process.env.API_BASE_URL}/csrf/token`,
     {
       method: "GET",
-      credentials: "include", // важно для получения и отправки кук
+      // important to sending and receiving cookies
+      credentials: "include", 
     }
   );
-
   if (res.ok) {
     const data = await res.json();
-    return data.token; // assuming the token is in the 'token' field
+    // assuming the token is in the 'token' field
+    return data.token; 
   } else {
     throw new Error("Failed to fetch CSRF token");
   }

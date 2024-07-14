@@ -2,7 +2,7 @@ export const signup = async (body) => {
   const csrfToken = await getCsrfToken();
 
   const res = await fetch(
-    `${process.env.API_BASE_URL}/auth/signUp`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/signUp`,
     {
       method: "POST",
       body: body,
@@ -21,7 +21,7 @@ export const signin = async (body) => {
   const csrfToken = await getCsrfToken();
 
   const res = await fetch(
-    `${process.env.API_BASE_URL}/auth/signIn`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/signIn`,
     {
       method: "POST",
       body: body,
@@ -41,7 +41,7 @@ export const signin = async (body) => {
 
 export const getCsrfToken = async () => {
   const res = await fetch(
-    `${process.env.API_BASE_URL}/csrf/token`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/csrf/token`,
     {
       method: "GET",
       // important to sending and receiving cookies

@@ -15,6 +15,7 @@ const Category = ({
 }) => {
   const [pictograms, setPictograms] = useState([]);
   const [imageSrc, setImageSrc] = useState("");
+  console.log (category, supercategory)
   useEffect(() => {
     getOneMediaFile(category?.media?.id, setImageSrc);
   }, [category?.media?.id]);

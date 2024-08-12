@@ -2,7 +2,6 @@ import Category from "@/_components/dashboard/categories/category/Category";
 import {
   getAllBySupercategory,
   getOneById,
-  getOneMediaPage,
 } from "@/_helpers/categoryApiHelper";
 import React from "react";
 

@@ -2,13 +2,13 @@ import { getCsrfToken } from "./authApiHelpers";
 
 const REVALIDATE = parseInt(process.env.REVALIDATE);
 
-// find all categories as pages for dashboard
+// find all pictograms as pages for dashboard
 export const getAll = async (pageNo, listSize, isSeance) => {
   const csrfToken = await getCsrfToken();
 
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms?page=${pageNo}&size=${listSize}&isSeance=${isSeance}`,
       {
         next: { revalidate: REVALIDATE },
         headers: {
@@ -23,14 +23,40 @@ export const getAll = async (pageNo, listSize, isSeance) => {
       return body;
     }
   } catch (error) {
-    console.error("Error fetching categories:", error.message);
+    console.error("Error fetching pictograms:", error.message);
   }
 };
 
-// find all categories as one list
+// find all pictograms as one list
 export async function getAllAsList() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories?isSeance=true`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms?isSeance=true`,
+    {
+      next: { revalidate: REVALIDATE },
+    }
+  ).catch((e) => {
+    throw new Error("Failed to fetch data: " + e.message);
+  });
+  return res.json();
+}
+
+// find all by category
+export async function getAllByCategory(id) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/category/${id}`,
+    {
+      next: { revalidate: REVALIDATE },
+    }
+  ).catch((e) => {
+    throw new Error("Failed to fetch data: " + e.message);
+  });
+  return res.json();
+}
+
+// find all by type
+export async function getAllByType(type) {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/type/${type}`,
     {
       next: { revalidate: REVALIDATE },
     }
@@ -42,20 +68,7 @@ export async function getAllAsList() {
 
 export async function getOneById(id) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`,
-    {
-      next: { revalidate: REVALIDATE },
-    }
-  ).catch((e) => {
-    throw new Error("Failed to fetch data: " + e.message);
-  });
-  return res.json();
-}
-
-// find all subcategories
-export async function getAllBySupercategory(id) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}/subcategories`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/${id}`,
     {
       next: { revalidate: REVALIDATE },
     }
@@ -67,8 +80,10 @@ export async function getAllBySupercategory(id) {
 
 export async function createOne(body) {
   const csrfToken = await getCsrfToken();
+
+  console.log(body);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms`,
     {
       method: "POST",
       body: body,
@@ -92,7 +107,7 @@ export async function updateOneById(id, body) {
 
   console.log(body.get("imageFile"));
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/${id}`,
     {
       method: "PUT",
       body: body,
@@ -115,7 +130,7 @@ export async function deleteOneById(id) {
   const csrfToken = await getCsrfToken();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/${id}`,
     {
       method: "DELETE",
       headers: {
@@ -130,13 +145,13 @@ export async function deleteOneById(id) {
   return res.status;
 }
 
-// category media management
+// pictogram media management
 export async function createOneMedia(data) {
   const csrfToken = await getCsrfToken();
 
   console.log(data);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/media`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/media`,
     {
       method: "POST",
       body: JSON.stringify(data),
@@ -157,7 +172,7 @@ export async function deleteOneMediaById(id) {
 
   console.log(data);
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/media/${id}`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/media/${id}`,
     {
       method: "DELETE",
       body: JSON.stringify(data),
@@ -173,10 +188,10 @@ export async function deleteOneMediaById(id) {
   return res.json();
 }
 
-export const getOneMediaFile = async (id, setImageSrc) => {
+export const getOneMediaFile = async (mediaId, setImageSrc) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}/image`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/pictograms/${mediaId}/image`
     );
     if (response.ok) {
       const blob = await response.blob();

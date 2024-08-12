@@ -3,7 +3,7 @@ import React from "react";
 const UpdateIcon = () => {
   return (
     <svg
-      className="w-4 h-4 md:w-6 md:h-6 text-[#f9f9f9]"
+      className="w-5 h-5 md:w-6 md:h-6 text-[#f9f9f9]"
       aria-hidden="true"
       xmlns="http://www.w3.org/2000/svg"
       width="24"

@@ -8,7 +8,7 @@ const ActionsHeader = ({ entity, entityName }) => {
     <div className="flex ml-3 flex-row items-center justify-evenly md:justify-end gap-3">      
       <Link
         href={`/dashboard/${entityName}/${entity.id}/update`}
-        className="group relative bg-pbg hover:bg-pred transition ease-in-out duration-300 h-10 w-10 rounded-3xl px-2 font-bold tracking-[1.25px] border-none outline-none flex flex-row justify-center items-center text-xs sm:text-sm my-1 group"
+        className="group relative bg-pbg hover:bg-pred transition ease-in-out duration-300 h-10 w-10 rounded-3xl px-2 font-bold tracking-[1.25px] border-none outline-none flex flex-row justify-center items-center text-xs sm:text-sm my-1"
       >
         <UpdateIcon />
         <div className="hidden group-hover:block absolute bottom-[100%] -right-[25%] rounded-lg p-1 cursor-default">

@@ -1,11 +1,12 @@
-import CategoriesList from "@/_components/dashboard/categories/CategoriesList";
 import CatCreate from "@/_components/dashboard/categories/category/CatCreate";
-import { getAll } from "@/_helpers/categoryApiHelper";
+import { getAllAsList as getAllCategories } from "@/_helpers/categoryApiHelper";
+import { getAll as getAllQuestions } from "@/_helpers/questionApiHelper";
 import React from "react";
 
 const page = async () => {  
-  const categories = await getAll(0, 0, true);
-  return <CatCreate categories={categories ?? null} />;
+  const categories = await getAllCategories();
+  const questions = await getAllQuestions();
+  return <CatCreate categories={categories ?? null} questions={questions} />;
 };
 
 export default page;

@@ -7,7 +7,7 @@ const ListHeader = ({ entityName }) => {
     <thead>
       <tr className="border-b">
         <th className="text-lg flex justify-between items-center">
-          <span className=" mx-auto">{entityName.toUpperCase()}</span>
+          <span className=" mx-auto">{entityName == "pictograms" ? "PICTOGRAMMES" : entityName.toUpperCase()}</span>
           <Link
             className="relative bg-pbg hover:bg-pred transition ease-in-out duration-300 h-5 sm:h-10 sm:w-10 rounded-3xl px-2 font-bold tracking-[1.25px] border-none outline-none flex flex-row justify-center items-center text-xs sm:text-sm my-1 group mx-4"
             href={`/dashboard/${entityName}/create`}

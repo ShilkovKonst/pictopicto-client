@@ -1,15 +1,11 @@
-import CategoriesList from "@/_components/dashboard/categories/CategoriesList";
-import { getAll } from "@/_helpers/categoryApiHelper";
+import EntityList from "@/_components/dashboard/EntityList";
+import { getAll, getAllAsList } from "@/_helpers/categoryApiHelper";
 import React from "react";
 
-const page = async ({ searchParams }) => {
-  const data = await getAll(
-    searchParams.page ?? 0,
-    searchParams.size ?? 5,
-    searchParams.isSeance ?? false
-  );
+const page = async () => {
+  const data = await getAllAsList();
   console.log(data);
-  return <CategoriesList data={data ?? null} />;
+  return <EntityList data={data ?? null} entityName="categories" />;
 };
 
 export default page;

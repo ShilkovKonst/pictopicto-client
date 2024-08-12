@@ -4,7 +4,7 @@ import CategoryHead from "./_categoryHead";
 import CategoryForm from "./_categoryForm";
 import { usePathname } from "next/navigation";
 
-const CatCreate = ({ categories }) => {
+const CatCreate = ({ categories, questions }) => {
   const pathname = usePathname();
   return (
     <>
@@ -14,6 +14,7 @@ const CatCreate = ({ categories }) => {
       <CategoryForm
         category={null}
         categories={categories}
+        questions={questions}
         pathname={pathname}
       />
     </>

@@ -89,8 +89,6 @@ export async function createOne(body) {
 
 export async function updateOneById(id, body) {
   const csrfToken = await getCsrfToken();
-
-  console.log(body.get("imageFile"));
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_BASE_URL}/categories/${id}`,
     {

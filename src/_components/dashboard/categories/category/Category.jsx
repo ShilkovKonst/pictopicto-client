@@ -3,30 +3,33 @@ import { Accordion } from "flowbite-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import CategoryHead from "./_categoryHead";
 import {
   getOneMediaFile,
 } from "@/_helpers/categoryApiHelper";
+import EntityHead from "../../_entityHead";
 
 const Category = ({
   category,
+  questions,
   subcategories,
   supercategory,
 }) => {
-  const [pictograms, setPictograms] = useState([]);
   const [imageSrc, setImageSrc] = useState("");
-  console.log (category, supercategory)
+
   useEffect(() => {
     getOneMediaFile(category?.media?.id, setImageSrc);
   }, [category?.media?.id]);
+  useEffect(() => {
+    console.log(questions)
+  }, [questions]);
 
   return (
     <>
       <table className="table w-full">
-      {category && <CategoryHead category={category} />}
+      {category && <EntityHead entity={category} entityName="categories" />}
         <tbody className="flex flex-col gap-2">
           {category && (
-            <tr className="flex flex-row flex-wrap gap-1 lg:gap-0 justify-start items-start md:items-center text-sm sm:text-base p-2 border-b">
+            <tr className="flex flex-row flex-wrap gap-1 lg:gap-0 justify-start items-center text-sm sm:text-base p-2 border-b">
               <th className="text-start w-[40%] lg:w-[20%]">Image</th>
               <td className="text-start w-[45%] lg:w-[30%]">
                 {imageSrc.length > 0 && (
@@ -55,20 +58,40 @@ const Category = ({
           )}
         </tbody>
       </table>
-      <Accordion collapseAll>
-        {pictograms && (
+      <Accordion collapseAll alwaysOpen>
+        {questions && (
+          <Accordion.Panel>
+            <Accordion.Title>Questions</Accordion.Title>
+            <Accordion.Content>
+              <ul className="list-disc pl-5 text-gray-500 dark:text-gray-400">
+                {questions?.length > 0 &&
+                  questions?.map((q, i) => (
+                    <li key={i}>
+                      <Link
+                        href={`/dashboard/questions/${q?.id}`}
+                        className="text-cyan-600 hover:underline dark:text-cyan-500"
+                      >
+                        {q?.title}
+                      </Link>
+                    </li>
+                  ))}
+              </ul>
+            </Accordion.Content>
+          </Accordion.Panel>
+        )}
+        {category?.pictograms && (
           <Accordion.Panel>
             <Accordion.Title>Pictogrammes</Accordion.Title>
             <Accordion.Content>
               <ul className="list-disc pl-5 text-gray-500 dark:text-gray-400">
-                {pictograms.length > 0 &&
-                  pictograms?.map((subCat, i) => (
+                {category?.pictograms?.length > 0 &&
+                  category?.pictograms?.map((pict, i) => (
                     <li key={i}>
                       <Link
-                        href={`/dashboard/pictograms/${pictograms?.id}`}
+                        href={`/dashboard/pictograms/${pict.id}`}
                         className="text-cyan-600 hover:underline dark:text-cyan-500"
                       >
-                        {pictograms?.title}
+                        {pict.title}
                       </Link>
                     </li>
                   ))}

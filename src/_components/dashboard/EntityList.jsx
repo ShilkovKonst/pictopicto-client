@@ -20,12 +20,14 @@ const EntityList = ({ data, entityName }) => {
         <tbody className="flex flex-col gap-1">
           <tr className="flex flex-row justify-between items-center text-sm sm:text-base py-4 border-b">
             {(entityName == "categories" || entityName == "pictograms") && (
-              <th className="text-center md:text-start w-1/3">Image</th>
+              <th className="text-center md:text-start w-1/3 md:w-1/5">
+                Image
+              </th>
             )}
             <th
               className={`flex justify-center md:justify-start items-center md:text-start ${
-                entityName == "categories" || entityName == "pictogrammes"
-                  ? "w-1/3"
+                entityName == "categories" || entityName == "pictograms"
+                  ? "w-1/3 md:w-2/5"
                   : "w-1/2"
               }`}
             >
@@ -36,7 +38,15 @@ const EntityList = ({ data, entityName }) => {
                 Titre
               </Link>
             </th>
-            <th className="text-center w-1/3">Actions</th>
+            <th
+              className={`text-center ${
+                entityName == "categories" || entityName == "pictograms"
+                  ? "w-1/3 md:w-2/5"
+                  : "w-1/2"
+              }`}
+            >
+              Actions
+            </th>
           </tr>
           {currentItems &&
             currentItems.map((item, i) => (

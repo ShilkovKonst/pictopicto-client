@@ -16,7 +16,7 @@ const MediaField = ({ entity, entityName }) => {
   }, [entity?.media?.id, entityName]);
 
   return (
-    <td className="flex justify-center md:justify-start w-1/3">
+    <td className="flex justify-center md:justify-start w-1/3 md:w-1/5">
       <Link href={`/dashboard/${entityName}/${entity?.id}`}>
         {imageSrc.length > 0 && (
           <Image

@@ -33,7 +33,7 @@ const ActionDelete = ({ entity }) => {
     <>
       <button
         onClick={() => setToDelete(true)}
-        className="group relative bg-pbg hover:bg-pred transition ease-in-out duration-300 h-5 md:h-10 w-10 rounded-3xl px-2 font-bold tracking-[1.25px] border-none outline-none flex flex-row justify-center items-center text-xs sm:text-sm my-1"
+        className="group relative bg-pbg hover:bg-pred transition ease-in-out duration-300 h-10 w-10 rounded-3xl px-2 font-bold tracking-[1.25px] border-none outline-none flex flex-row justify-center items-center text-xs sm:text-sm my-1"
       >
         <RemoveIcon />
         <div className="hidden group-hover:block absolute bottom-[100%] -right-[30%] rounded-lg p-1 cursor-default">
